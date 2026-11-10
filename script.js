@@ -628,8 +628,8 @@ loadPhotoGalleries();
 
 async function loadHomepagePhotos() {
 
-  const aboutPhoto = document.querySelector("#about .about-image img");
-
+  const aboutPhoto = document.querySelector("#about .about-photo");
+  
   if (!aboutPhoto) return;
 
   try {
