@@ -335,3 +335,107 @@ async function loadCommunityUpdates() {
 }
 
 loadCommunityUpdates();
+
+async function loadPhotoGalleries() {
+
+  const container = document.getElementById("galleries-list");
+
+  if (!container) return;
+
+  try {
+
+    const response = await fetch("/photos.json", {
+
+      cache: "no-store"
+
+    });
+
+    if (!response.ok) throw new Error("Galleries unavailable");
+
+    const galleries = await response.json();
+
+    container.replaceChildren();
+
+    if (!galleries.length) {
+
+      container.textContent = "Photo galleries will appear here.";
+
+      return;
+
+    }
+
+    for (const gallery of galleries) {
+
+      const card = document.createElement("article");
+
+      card.className = "event-card";
+
+      const heading = document.createElement("h3");
+
+      heading.textContent = gallery.title;
+
+      card.appendChild(heading);
+
+      const grid = document.createElement("div");
+
+      grid.className = "gallery-grid";
+
+      grid.style.display = "grid";
+
+      grid.style.gridTemplateColumns =
+
+        "repeat(auto-fit, minmax(160px, 1fr))";
+
+      grid.style.gap = "12px";
+
+      grid.style.marginTop = "16px";
+
+      for (const imageUrl of gallery.images || []) {
+
+        const link = document.createElement("a");
+
+        link.href = imageUrl;
+
+        link.target = "_blank";
+
+        link.rel = "noopener noreferrer";
+
+        const photo = document.createElement("img");
+
+        photo.src = imageUrl;
+
+        photo.alt = gallery.title;
+
+        photo.loading = "lazy";
+
+        photo.style.width = "100%";
+
+        photo.style.height = "180px";
+
+        photo.style.objectFit = "cover";
+
+        photo.style.borderRadius = "12px";
+
+        link.appendChild(photo);
+
+        grid.appendChild(link);
+
+      }
+
+      card.appendChild(grid);
+
+      container.appendChild(card);
+
+    }
+
+  } catch (error) {
+
+    console.error("Unable to load photo galleries:", error);
+
+    container.textContent = "Photo galleries will appear here.";
+
+  }
+
+}
+
+loadPhotoGalleries();
