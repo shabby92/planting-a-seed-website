@@ -167,4 +167,27 @@
 
   }
 
+ .about-photo {
+
+  width: 100%;
+
+  height: 320px;
+
+  object-fit: cover;
+
+  border-radius: 6px;
+
+  margin-top: 24px;
+
+}
+
+@media (max-width: 850px) {
+
+  .about-photo {
+
+    height: 240px;
+
+  }
+
+} 
 }
