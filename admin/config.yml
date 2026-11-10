@@ -69,3 +69,25 @@ collections:
       - {label: "Gallery Name", name: "title", widget: "string"}
 
       - {label: "Photos", name: "images", widget: "list", field: {label: "Image", name: "image", widget: "image"}}
+
+      - name: "homepage"
+
+    label: "Homepage Photos"
+
+    files:
+
+      - name: "homepage_photos"
+
+        label: "Manage Homepage Photos"
+
+        file: "content/homepage/photos.json"
+
+        fields:
+
+          - label: "Who We Are Photo"
+
+            name: "about_image"
+
+            widget: "image"
+
+            required: false
