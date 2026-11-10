@@ -623,3 +623,43 @@ loadPhotoGalleries();
   });
 
 })();
+
+/* HOMEPAGE PHOTO MANAGER */
+
+async function loadHomepagePhotos() {
+
+  const aboutPhoto = document.querySelector("#about .about-image img");
+
+  if (!aboutPhoto) return;
+
+  try {
+
+    const response = await fetch("/content/homepage/photos.json", {
+
+      cache: "no-store"
+
+    });
+
+    if (!response.ok) {
+
+      throw new Error("Homepage photo settings unavailable");
+
+    }
+
+    const settings = await response.json();
+
+    if (settings.about_image) {
+
+      aboutPhoto.src = settings.about_image;
+
+    }
+
+  } catch (error) {
+
+    console.error("Unable to load homepage photos:", error);
+
+  }
+
+}
+
+loadHomepagePhotos();
