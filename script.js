@@ -196,9 +196,7 @@ async function loadCommunityUpdates() {
 
     if (!updates.length) {
 
-      container.textContent =
-
-        "Community updates will appear here.";
+      container.textContent = "Community updates will appear here.";
 
       return;
 
@@ -209,6 +207,26 @@ async function loadCommunityUpdates() {
       const card = document.createElement("article");
 
       card.className = "event-card";
+
+      if (update.image) {
+
+        const photo = document.createElement("img");
+
+        photo.src = update.image;
+
+        photo.alt = update.title;
+
+        photo.loading = "lazy";
+
+        photo.style.width = "100%";
+
+        photo.style.maxWidth = "600px";
+
+        photo.style.borderRadius = "12px";
+
+        card.appendChild(photo);
+
+      }
 
       const heading = document.createElement("h3");
 
@@ -222,41 +240,85 @@ async function loadCommunityUpdates() {
 
         "en-US",
 
-        { year: "numeric", month: "long", day: "numeric" }
+        { year: "numeric", month: "long", day: "numeric", timeZone: "UTC" }
 
       );
 
       card.appendChild(date);
 
-      if (update.image) {
+      const preview = document.createElement("p");
 
-        const photo = document.createElement("img");
+      const text = update.body || "";
 
-        photo.src = update.image;
+      preview.textContent =
 
-        photo.alt = update.title;
+        text.length > 180 ? text.slice(0, 180) + "..." : text;
 
-        photo.loading = "lazy";
+      card.appendChild(preview);
 
-        photo.style.maxWidth = "100%";
+      const actions = document.createElement("div");
 
-        photo.style.borderRadius = "12px";
+      actions.style.display = "flex";
 
-        card.appendChild(photo);
+      actions.style.gap = "12px";
 
-      }
+      actions.style.flexWrap = "wrap";
 
-      if (update.body) {
+      const readLink = document.createElement("a");
 
-        const story = document.createElement("p");
+      readLink.href = update.url;
 
-        story.style.whiteSpace = "pre-line";
+      readLink.textContent = "Read Full Story";
 
-        story.textContent = update.body;
+      readLink.className = "btn btn-green";
 
-        card.appendChild(story);
+      actions.appendChild(readLink);
 
-      }
+      const shareButton = document.createElement("button");
+
+      shareButton.type = "button";
+
+      shareButton.textContent = "Share Story";
+
+      shareButton.className = "btn btn-outline";
+
+      shareButton.addEventListener("click", async () => {
+
+        const url = new URL(update.url, window.location.origin).href;
+
+        if (navigator.share) {
+
+          try {
+
+            await navigator.share({ title: update.title, url });
+
+          } catch (error) {
+
+            if (error.name !== "AbortError") console.error(error);
+
+          }
+
+        } else {
+
+          try {
+
+            await navigator.clipboard.writeText(url);
+
+            alert("Story link copied!");
+
+          } catch {
+
+            window.prompt("Copy this story link:", url);
+
+          }
+
+        }
+
+      });
+
+      actions.appendChild(shareButton);
+
+      card.appendChild(actions);
 
       container.appendChild(card);
 
@@ -266,9 +328,7 @@ async function loadCommunityUpdates() {
 
     console.error("Unable to load community updates:", error);
 
-    container.textContent =
-
-      "Community updates will appear here.";
+    container.textContent = "Community updates will appear here.";
 
   }
 
