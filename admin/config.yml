@@ -6,9 +6,7 @@ name: github
 
 repo: shabby92/planting-a-seed-website
 
-branch: main base_url: https://api.netlify.com
-
-auth_endpoint: auth
+branch: main 
 
 media_folder: "images/uploads"
 
