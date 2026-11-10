@@ -2,11 +2,13 @@
 
 backend:
 
-  name: github
+name: github
 
-  repo: shabby92/planting-a-seed-website
+repo: shabby92/planting-a-seed-website
 
-  branch: main
+branch: main base_url: https://api.netlify.com
+
+auth_endpoint: auth
 
 media_folder: "images/uploads"
 
