@@ -70,7 +70,7 @@ collections:
 
       - {label: "Photos", name: "images", widget: "list", field: {label: "Image", name: "image", widget: "image"}}
 
-      - name: "homepage"
+  - name: "homepage"
 
     label: "Homepage Photos"
 
