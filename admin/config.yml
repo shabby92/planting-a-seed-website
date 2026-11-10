@@ -1,0 +1,71 @@
+
+
+backend:
+
+  name: github
+
+  repo: shabby92/planting-a-seed-website
+
+  branch: main
+
+media_folder: "images/uploads"
+
+public_folder: "/images/uploads"
+
+collections:
+
+  - name: "events"
+
+    label: "Upcoming Events"
+
+    folder: "content/events"
+
+    create: true
+
+    slug: "{{slug}}"
+
+    fields:
+
+      - {label: "Title", name: "title", widget: "string"}
+
+      - {label: "Date", name: "date", widget: "datetime"}
+
+      - {label: "Location", name: "location", widget: "string"}
+
+      - {label: "Description", name: "body", widget: "markdown"}
+
+  - name: "updates"
+
+    label: "Community Updates"
+
+    folder: "content/updates"
+
+    create: true
+
+    slug: "{{slug}}"
+
+    fields:
+
+      - {label: "Title", name: "title", widget: "string"}
+
+      - {label: "Date", name: "date", widget: "datetime"}
+
+      - {label: "Photo", name: "image", widget: "image", required: false}
+
+      - {label: "Story", name: "body", widget: "markdown"}
+
+  - name: "photos"
+
+    label: "Photo Galleries"
+
+    folder: "content/photos"
+
+    create: true
+
+    slug: "{{slug}}"
+
+    fields:
+
+      - {label: "Gallery Name", name: "title", widget: "string"}
+
+      - {label: "Photos", name: "images", widget: "list", field: {label: "Image", name: "image", widget: "image"}}
