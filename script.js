@@ -173,3 +173,105 @@ async function loadUpcomingEvents() {
 }
 
 loadUpcomingEvents();
+
+async function loadCommunityUpdates() {
+
+  const container = document.getElementById("updates-list");
+
+  if (!container) return;
+
+  try {
+
+    const response = await fetch("/updates.json", {
+
+      cache: "no-store"
+
+    });
+
+    if (!response.ok) throw new Error("Updates unavailable");
+
+    const updates = await response.json();
+
+    container.replaceChildren();
+
+    if (!updates.length) {
+
+      container.textContent =
+
+        "Community updates will appear here.";
+
+      return;
+
+    }
+
+    for (const update of updates) {
+
+      const card = document.createElement("article");
+
+      card.className = "event-card";
+
+      const heading = document.createElement("h3");
+
+      heading.textContent = update.title;
+
+      card.appendChild(heading);
+
+      const date = document.createElement("p");
+
+      date.textContent = new Date(update.date).toLocaleDateString(
+
+        "en-US",
+
+        { year: "numeric", month: "long", day: "numeric" }
+
+      );
+
+      card.appendChild(date);
+
+      if (update.image) {
+
+        const photo = document.createElement("img");
+
+        photo.src = update.image;
+
+        photo.alt = update.title;
+
+        photo.loading = "lazy";
+
+        photo.style.maxWidth = "100%";
+
+        photo.style.borderRadius = "12px";
+
+        card.appendChild(photo);
+
+      }
+
+      if (update.body) {
+
+        const story = document.createElement("p");
+
+        story.style.whiteSpace = "pre-line";
+
+        story.textContent = update.body;
+
+        card.appendChild(story);
+
+      }
+
+      container.appendChild(card);
+
+    }
+
+  } catch (error) {
+
+    console.error("Unable to load community updates:", error);
+
+    container.textContent =
+
+      "Community updates will appear here.";
+
+  }
+
+}
+
+loadCommunityUpdates();
