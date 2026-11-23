@@ -52,8 +52,12 @@ collections:
 
       - {label: "Photo", name: "image", widget: "image", required: false}
 
-      - {label: "Story", name: "body", widget: "markdown"}
+      - {label: "Upload Video (MP4)", name: "video", widget: "file", required: false, media_folder: "/images/uploads", public_folder: "/images/uploads", media_library: {config: {multiple: false}}}
 
+      - {label: "YouTube Video Link", name: "youtube_url", widget: "string", required: false, hint: "Paste the full YouTube video URL here."}
+
+      - {label: "Story", name: "body", widget: "markdown"}
+      
   - name: "photos"
 
     label: "Photo Galleries"
