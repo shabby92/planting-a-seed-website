@@ -174,6 +174,70 @@ async function loadUpcomingEvents() {
 
 loadUpcomingEvents();
 
+function getYouTubeEmbedUrl(link) {
+
+  if (!link) return "";
+
+  try {
+
+    const url = new URL(link);
+
+    const host = url.hostname.toLowerCase();
+
+    let id = "";
+
+    if (
+
+      host === "youtube.com" ||
+
+      host === "www.youtube.com" ||
+
+      host === "m.youtube.com"
+
+    ) {
+
+      if (url.pathname === "/watch") {
+
+        id = url.searchParams.get("v") || "";
+
+      } else {
+
+        const match = url.pathname.match(
+
+          /^\/(shorts|embed|live)\/([^/]+)/
+
+        );
+
+        if (match) id = match[2];
+
+      }
+
+    } else if (
+
+      host === "youtu.be" ||
+
+      host === "www.youtu.be"
+
+    ) {
+
+      id = url.pathname.split("/")[1] || "";
+
+    }
+
+    return /^[a-zA-Z0-9_-]{11}$/.test(id)
+
+      ? `https://www.youtube-nocookie.com/embed/${id}`
+
+      : "";
+
+  } catch {
+
+    return "";
+
+  }
+
+}
+
 async function loadCommunityUpdates() {
 
   const container = document.getElementById("updates-list");
@@ -228,6 +292,80 @@ async function loadCommunityUpdates() {
 
       }
 
+      // Uploaded video
+
+if (update.video) {
+
+  const video = document.createElement("video");
+
+  video.src = update.video;
+
+  video.controls = true;
+
+  video.playsInline = true;
+
+  video.preload = "metadata";
+
+  video.style.display = "block";
+
+  video.style.width = "100%";
+
+  video.style.height = "auto";
+
+  video.style.margin = "16px 0";
+
+  video.style.borderRadius = "12px";
+
+  card.appendChild(video);
+
+}
+
+// YouTube video
+
+const youtubeEmbed = getYouTubeEmbedUrl(update.youtube_url);
+
+if (youtubeEmbed) {
+
+  const wrapper = document.createElement("div");
+
+  wrapper.style.width = "100%";
+
+  wrapper.style.aspectRatio = "16 / 9";
+
+  wrapper.style.margin = "16px 0";
+
+  const iframe = document.createElement("iframe");
+
+  iframe.src = youtubeEmbed;
+
+  iframe.title = update.title + " YouTube video";
+
+  iframe.loading = "lazy";
+
+  iframe.allowFullscreen = true;
+
+  iframe.referrerPolicy = "strict-origin-when-cross-origin";
+
+  iframe.allow =
+
+    "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share";
+
+  iframe.style.width = "100%";
+
+  iframe.style.height = "100%";
+
+
+
+  iframe.style.border = "0";
+
+  iframe.style.borderRadius = "12px";
+
+  wrapper.appendChild(iframe);
+
+  card.appendChild(wrapper);
+
+}
+      
       const heading = document.createElement("h3");
 
       heading.textContent = update.title;
