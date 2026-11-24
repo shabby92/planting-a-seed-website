@@ -244,6 +244,30 @@ ${update.video ? `
 
 </video>` : ""}
 
+${getYouTubeEmbedUrl(update.youtube_url) ? `
+
+<div style="width:100%;aspect-ratio:16/9;margin:20px 0;">
+
+  <iframe
+
+    src="${escapeHtml(getYouTubeEmbedUrl(update.youtube_url))}"
+
+    title="${escapeHtml(update.title)} YouTube video"
+
+    loading="lazy"
+
+    style="width:100%;height:100%;border:0;border-radius:12px;"
+
+    referrerpolicy="strict-origin-when-cross-origin"
+
+    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+
+    allowfullscreen>
+
+  </iframe>
+
+</div>` : ""}
+
 <div class="story-body">${escapeHtml(update.body)}</div>
 
 <div class="story-actions">
