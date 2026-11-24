@@ -23,7 +23,7 @@ We are incredibly grateful to our generous donors and dedicated volunteers who m
 Thank You to Our Volunteers:
 
 * Misty Davis
-* Suzanne Phelps
+* Suzanne Phipps
 * Liz Powers Jones
 * Kianna Jones
 * Shawndel Malcolm
