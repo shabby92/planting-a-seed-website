@@ -82,19 +82,23 @@ function readUpdate(source, filename) {
 
   return {
 
-    title: data.title,
+  title: data.title,
 
-    date: data.date,
+  date: data.date,
 
-    image: data.image || "",
+  image: data.image || "",
 
-    body,
+  video: data.video || "",
 
-    slug,
+  youtube_url: data.youtube_url || "",
 
-    url: `/updates/${slug}/`
+  body,
 
-  };
+  slug,
+
+  url: `/updates/${slug}/`
+
+};
 
 }
 
