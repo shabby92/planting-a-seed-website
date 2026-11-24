@@ -102,6 +102,40 @@ function readUpdate(source, filename) {
 
 }
 
+function getYouTubeEmbedUrl(link) {
+
+  if (!link) return "";
+
+  try {
+
+    const url = new URL(link);
+
+    const host = url.hostname.toLowerCase();
+
+    let id = "";
+
+    if (
+
+      host === "youtube.com" ||
+
+      host === "www.youtube.com" ||
+
+      host === "m.youtube.com"
+
+    ) {
+
+      if (url.pathname === "/watch") {
+
+        id = url.searchParams.get("v") || "";
+
+      } else {
+
+        const match = url.pathname.match(
+
+          /^\/(shorts|embed|live)\/([^/]+)/
+
+        );
+        
 function createStoryPage(update) {
 
   const directory = path.join(pagesFolder, update.slug);
