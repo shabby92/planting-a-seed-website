@@ -135,7 +135,37 @@ function getYouTubeEmbedUrl(link) {
           /^\/(shorts|embed|live)\/([^/]+)/
 
         );
-        
+
+                if (match) id = match[2];
+
+      }
+
+    } else if (
+
+      host === "youtu.be" ||
+
+      host === "www.youtu.be"
+
+    ) {
+
+      id = url.pathname.split("/")[1] || "";
+
+    }
+
+    return /^[a-zA-Z0-9_-]{11}$/.test(id)
+
+      ? `https://www.youtube-nocookie.com/embed/${id}`
+
+      : "";
+
+  } catch {
+
+    return "";
+
+  }
+
+}
+
 function createStoryPage(update) {
 
   const directory = path.join(pagesFolder, update.slug);
