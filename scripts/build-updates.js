@@ -192,6 +192,24 @@ ${imageUrl ? `<meta property="og:image" content="${escapeHtml(imageUrl)}">` : ""
 
 ${imageUrl ? `<img src="${escapeHtml(imageUrl)}" alt="${escapeHtml(update.title)}">` : ""}
 
+${update.video ? `
+
+<video
+
+  controls
+
+  playsinline
+
+  preload="metadata"
+
+  style="display:block;width:100%;height:auto;margin:20px 0;border-radius:12px;"
+
+  src="${escapeHtml(new URL(update.video, siteUrl).href)}">
+
+  Your browser does not support video playback.
+
+</video>` : ""}
+
 <div class="story-body">${escapeHtml(update.body)}</div>
 
 <div class="story-actions">
